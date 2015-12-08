@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <web:CommonWebpart provider="webpart.MetaWebpart" catalogId="$[@catalogId]" siteNo="main"/>
+    <script src="/project/scripts/utils/jquery.js"></script>
+    <script src="/project/scripts/utils/interface.js"></script>
+</head>
+<body>
+<!--导航 start-->
+<!--#include virtual="/kfzx/include/header.shtml"-->
+<!--导航 end-->
+
+<!--主体内容 start-->
+
+<div class="content">
+    <div id="main_kfzx_rjxz_index">
+        <div class="main_part clearfix">
+            <ul class="crumbs clearfix">
+                <web:CommonWebpart provider="webpart.CatalogPositionWebpart" catalogId="$[@catalogId]" showParent="false" showInfo="asd" style="3"/>
+            </ul>
+            <div class="main_box">
+                <div class="pdown_menu fl">
+                    <h5 class="tit_know">客服中心</h5>
+                    <ul id="ulList" class="see_menu clearfix">
+                        <web:CommonWebpart provider="webpart.CatalogTreeWebpart" catalogId="484">
+                            <#list data as item>
+                                <#if item.name?exists>
+                                    <#if item.children?exists && item.catalog_no!="wsydj">
+                                        <li class="father" id="${item.catalog_id}"><a href="javascript:;">${item.name}<em></em></a>
+                                            <ul class="submenu_list" style="display:none;" id="${item.catalog_no}">
+                                                <#list item.children as catalog>
+                                                    <#if catalog.name?exists>
+                                                        <li id="${catalog.catalog_id}"><a href="${catalog.link_url}"><b>${catalog.name}</b></a></li>
+                                                    </#if>
+                                                </#list>
+                                            </ul>
+                                        </li>
+                                        <#else>
+                                            <li class="father" id="${item.catalog_id}"><a href="${item.link_url}">${item.name}<em></em></a></li>
+                                    </#if>
+                                </#if>
+                            </#list>
+                        </web:CommonWebpart>
+                    </ul>
+                    <script>
+                        <web:CommonWebpart provider="webpart.CatalogParentIdWebpart" catalogId="$[@catalogId]">
+                                <#list data as item>
+                        var parentid = ${item.parent_id};
+                        var ownid = $[@catalogId];
+                        var flag=true;
+                        </#list>
+                        </web:CommonWebpart>
+                        $(".father").each(function(){
+                            var parid=$(this).attr("id");
+                            if(parentid==parid){
+                                $(this).css("display","block");
+                                $(this).addClass("on_sty");
+                            }
+                            if(ownid==parid){
+                                $(this).children("a").addClass("hover_sty");
+                            }
+                        });
+                        $(".submenu_list li").each(function(){
+                            var thisid=$(this).attr("id");
+                            if(ownid==thisid){
+                                $(this).children("a").addClass("on_sty");
+                                $(this).parent(".submenu_list").show();
+                                $(this).parent("ul").prev("a").addClass("on_sty");
+                            }
+                        });
+                        $(".father").each(function(){
+                            $(this).click(function(){
+                                if($(this).children("a").attr("class")!="on_sty"){
+                                    $(this).children("a").attr("class","on_sty");
+                                    $(this).children(".submenu_list").slideDown("normal");
+                                    $(this).siblings().children(".submenu_list").slideUp("fast");
+                                    $(this).siblings().children("a").removeClass("on_sty");
+                                }
+                                else{
+                                    $(this).children("a").removeClass("on_sty");
+                                    $(this).children("a").attr("class","hover_sty");
+                                    $(this).children(".submenu_list").slideUp("fast");
+                                }
+                            })
+                        });
+                    </script>
+                    <div class="hot_news">
+                        <em class="hot_icc"></em>
+                        <h5 class="hot_qut">热门问题解答</h5>
+                        <ul class="top_problem clearfix">
+                            <web:CommonWebpart provider="webpart.QueryCommFiveQues" length="11" num="5">
+                                <#list data as item>
+                                    <li><a href="${item.type}">${item.question}</a></li>
+                                </#list>
+                            </web:CommonWebpart>
+                        </ul>
+                    </div>
+                </div>
+                <div class="right_con fr">
+                    <div class="at_present">
+                        <h5 class="at_tit">软件下载</h5>
+                    </div>
+                    <ul class="sev_list clearfix">
+                        <li><a href="javascript:;" class="bl_none on_sty"><span id="phone"><b class="s_b2">手机客户端</b></span><em class="triangle"></em></a></li>
+                        <li><a href="javascript:;" class="" ><span id="pc"><b class="s_b1">PC客户端</b></span><em class="triangle"></em></a></li>
+                        <li><a href="javascript:;"><span id="ipad"><b class="s_b3">PAD客户端</b></span><em class="triangle"></em></a></li>
+                    </ul>
+                    <div style="display:none" id="pcContent">
+                        <web:CommonWebpart provider="webpart.WtDownloadpart" catalogId="35" showParent="false" showInfo="asd" style="1" type="1">
+                            <ul class="down_list clearfix">
+                                <#list data as item>
+                                    <li class="clearfix  bg_f5">
+                                        <div class="tit_down fl">
+                                            <dl class="release">
+                                                <dt>${item.title}</dt>
+
+                                                <dd>${item.version}版</dd>
+                                                <dd>${item.modify_date}</dd>
+                                            </dl>
+                                            <em class="ps_ic"></em>
+                                        </div>
+                                        <p class="intro">${item.content}</p>
+                                        <span  class="down_but" style="cursor:pointer"><a href="${item.downLoad_dx}"><b>点击下载</b></a></span>
+                                    </li>
+                                    <li style="height: 20px;background-color: #fff;">  </li>
+                                </#list>
+                            </ul>
+                        </web:CommonWebpart>
+                    </div>
+
+                    <div style="display:block"  id="phoneContent">
+                        <web:CommonWebpart provider="webpart.WtDownloadpart" catalogId="35" showParent="false" showInfo="asd" style="1" type="3">
+                            <ul class="down_list clearfix">
+                                <#list data as item>
+                                    <li class="clearfix  bg_f5">
+                                        <div class="tit_down fl">
+                                            <dl class="release">
+                                                <dt>${item.title}</dt>
+                                                <dd>${item.version}版</dd>
+                                                <dd>${item.modify_date}</dd>
+                                            </dl>
+                                            <em class="ps_ic"></em>
+                                        </div>
+                                        <p class="intro">${item.content}</p>
+                        <span  class="down_but" style="cursor:pointer"><b>点击下载</b>
+                          <div class="h_down_con clearfix" style="display:none;"  id="soft${item.id}">
+                              <a href="${item.downLoad_dx}" class="don_computer fl">
+                                  <img src="/images/sever_17.png">
+                                  <p>下载到电脑</p>
+                              </a>
+                              <a class="onesweep fr">
+                                  <img src="${item.head_picture}" height="109px" width="109px"/>
+                                  <p style="text-align: center;">扫码下载</p>
+                              </a>
+                              <em class="buy_mt"></em>
+                          </div>
+                        </span>
+                                    </li>
+                                    <li style="height: 20px;background-color: #fff;">  </li>
+                                </#list>
+                            </ul>
+                        </web:CommonWebpart>
+                    </div>
+
+                    <div style="display:none"  id="ipadContent">
+                        <web:CommonWebpart provider="webpart.WtDownloadpart" catalogId="35" showParent="false" showInfo="asd" style="1" type="2">
+                            <ul class="down_list clearfix">
+                                <#list data as item>
+                                    <li class="clearfix  bg_f5">
+                                        <div class="tit_down fl">
+                                            <dl class="release">
+                                                <dt>${item.title}</dt>
+                                                <dd>${item.version}版</dd>
+                                                <dd>${item.modify_date}</dd>
+                                            </dl>
+                                            <em class="ps_ic"></em>
+                                        </div>
+                                        <p class="intro">${item.content}</p>
+                        <span  class="down_but" style="cursor:pointer"><b>点击下载</b>
+                          <div class="h_down_con clearfix" style="display:none;"  id="soft${item.id}">
+                              <a href="${item.downLoad_dx}" class="don_computer fl">
+                                  <img src="/images/sever_17.png">
+                                  <p>下载到电脑</p>
+                              </a>
+                              <a class="onesweep fr">
+                                  <img src="${item.head_picture}" height="109px" width="109px"/>
+                                  <p style="text-align: center;">扫码下载</p>
+                              </a>
+                              <em class="buy_mt"></em>
+                          </div>
+                        </span>
+                                    </li>
+                                    <li style="height: 20px;background-color: #fff;">  </li>
+                                </#list>
+                            </ul>
+                        </web:CommonWebpart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--底部 start-->
+<!--#include virtual="/include/footer.shtml"-->
+<!--底部 end-->
+<a class="bak_top" style="display:none">
+    <img src="/images/dj_03.png">
+    <b>返回顶部</b>
+</a>
+<script type="text/javascript">
+
+    //项目主体页面 pageCode:页面路径编码,jsonParam:参数，isLoad:是否每次都加载
+    var _defaultPage = {"pageCode": "main/kfzx/rjxz/index", "jsonParam":{'catalogId':'$[@catalogId]','route':' <web:CommonWebpart provider="webpart.RouteWebpart" catalogId="$[@catalogId]" showParent="false" showInfo="asd" style="3"/>'},"isLoad":false};
+
+    //项目页脚页面 pageCode:页面路径编码,jsonParam:参数，isLoad:是否每次都加载,默认是inclue/footer
+    var _footerPage = {"pageCode": "include/footer", "jsonParam":{},"isLoad":false};
+</script>
+<script type="text/javascript" src="/project/version.js"></script>
+<!--基础框架包 -->
+<script type="text/javascript" src="/thinkiveJs.min.js"></script>
+<script src="/project/scripts/utils/jquery.js"></script>
+<script>
+    //点击回到顶部
+    jQuery(function(){
+        jQuery(window).scroll(function () {
+            if(jQuery(window).scrollTop() >= 30)//距离顶部多少高度显示按钮
+            {
+                jQuery('.bak_top').slideDown(200);
+            }else
+            {
+                jQuery('.bak_top').slideUp(200);
+            }
+        });
+
+        jQuery('.bak_top').click(function(){
+            jQuery('body,html').animate({scrollTop:0},500)
+        });
+
+        //按钮定位
+        var win_width= jQuery(window).width();      //窗口宽度
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>华西证券</title>
+    <meta name="Keywords" content="华西证券">
+    <meta name="Description" content="华西证券">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <link href="$[css]/kfzx/rjxz/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="wrap">
+    <div id="top">
+        <a href=""></a>
+    </div>
+    <div id="font_top">
+        <p>软件下载</p>
+    </div>
+
+    <web:CommonWebpart provider="webpart.WtDownloadpart" catalogId="35" showParent="false" showInfo="asd" style="1"
+                       type="3">
+        <ul>
+
+            <#list data as item>
+                <div id="main">
+                    <div class="part1">
+                        <div class="edition">
+                            <img src="$[referpath]/images/kfzx/rjxz/images/product1.png" alt="">
+
+                            <div class="font_right">
+                                <p class="p1"><span>${item.title}</span></p>
+
+                                <p class="p2"><span>${item.version}</span>　${item.modify_date}</p>
+                            </div>
+                        </div>
+                        <div class="font_s">
+                            <p>为您个性化匹配投资全过程...</p>
+                        </div>
+                        <div class="load_d">
+                            <a id="btn-account" class="right_l btn btn-block btn-warning" href="${item.downLoad_dx}">
+                                <img src="$[referpath]/images/kfzx/rjxz/images/load.png" alt="">
+                                <span>"点击下载" (${item.softsize}M)</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </#list>
+        </ul>
+    </web:CommonWebpart>
+</div>
+
+<div id="wechat-mask" style="display:none;">
+    <div class="wechat-content">
+        <div>
+            <img src="$[referpath]/images/kfzx/rjxz/images/wechat-android.png" id="img-device">
+        </div>
+        <img src="$[referpath]/images/kfzx/rjxz/images/wechat-arrow.png">
+    </div>
+</div>
+<script>
+    //设备检测器。
+    var deviceDetector = (function () {
+        var wechatTag = "MicroMessenger",
+                iosTag = "Mac OS X",
+                androidTag = "Android";
+
+        var userAgent = navigator.userAgent,
+                result = {};
+
+        if (userAgent) {
+            result.isWeChat = userAgent.indexOf(wechatTag) > 0;
+            result.isIOS = userAgent.indexOf(iosTag) > 0;
+            result.isAndroid = userAgent.indexOf(androidTag) > 0;
+        }
+        return result;
+    })();
+
+    //下包及页面渲染
+    (function () {
+
+        window.onload = function () {
+            var isWeChat = deviceDetector.isWeChat,
+                    isIOS = deviceDetector.isIOS;
+            var btnAccount = document.getElementById("btn-account"),
+                    btnAccount1 = document.getElementById("btn-account1"),
+                    btnAccount2 = document.getElementById("btn-account2"),
+                    btnAccount3 = document.getElementById("btn-account3"),
+                    wechatMask = document.getElementById("wechat-mask");
+
+            if (isWeChat === true) {
+                document.body.style.display = "block";
+                if (isIOS === true) {
+                    document.getElementById("img-device").src = "$[referpath]/images/kfzx/rjxz/images/wechat-ios.jpg";
+                }
+
+                function blockA(btn) {
+                    btn.addEventListener("click", function () {
+                        wechatMask.style.display = "block";
+                    }, false);
+
+                    wechatMask.addEventListener("click", function () {
+                        this.style.display = "none";
+                    }, false);
+                }
+
+                blockA(btnAccount);
+                blockA(btnAccount1);
+                blockA(btnAccount2);
+                blockA(btnAccount3);
+                blockA(btnAccount4);
+            } else {
+
+                btnAccount.addEventListener("click", function () {
+                    var iosPack = "itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/fuckusername/hxzqplist/master/ycf.plist",
+                            androidPack = "http://o2o.hx168.com.cn/m/o2o/download/account/apk/ycf/hxaccount.apk";
+                    if (isIOS === true) {
+                        window.location = iosPack;
+                    } else {
+                        window.location = androidPack;
+                    }
+                }, false);
+
+            }
+
+        };
+
+    })();
+
+    //事件处理
+    /*(function(){
+     var btnAccount = document.getElementById("btn-account"),
+     btnAccount1 = document.getElementById("btn-account1"),
+     btnAccount2 = document.getElementById("btn-account2"),
+     btnAccount3 = document.getElementById("btn-account3"),
+     wechatMask = document.getElementById("wechat-mask");
+     btnAccount.addEventListener("click", function(){
+     wechatMask.style.display = "block";
+     }, false);
+     btnAccount1.addEventListener("click", function(){
+     wechatMask.style.display = "block";
+     }, false);
+     btnAccount2.addEventListener("click", function(){
+     wechatMask.style.display = "block";
+     }, false);
+     btnAccount3.addEventListener("click", function(){
+     wechatMask.style.display = "block";
+     }, false);
+     wechatMask.addEventListener("click", function(){
+     this.style.display = "none";
+     }, false);
+     })();*/
+    window.onload = function () {
+
+        var oRed = document.getElementsByTagName('.redbg');
+        var oLoad = document.getElementsByTagName('.right_l');
+        for (var i = 0; i < oLoad.length; i++) {
+            oLoad[i].onclick = function () {
+                for (var i = 0; i < oRed.length; i++) {
+                    oRed[i].style.background = "#bb1111";
+                }
+                ;
+            }
+        }
+        ;
+    }
+</script>
+</body>
+</html>
