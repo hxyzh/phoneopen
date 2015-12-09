@@ -8,6 +8,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link href="$[css]/kfzx/rjxz/style.css" rel="stylesheet" type="text/css">
+    <script src="$[referpath]/scripts/kfzx/rjxz/jquery.js"></script>
 </head>
 <body>
 <div id="wrap">
@@ -23,7 +24,7 @@
         <ul>
 
             <#list data as item>
-                <div id="main">
+                <div class="main">
                     <div class="part1">
                         <div class="edition">
                             <img src="$[referpath]/images/kfzx/rjxz/images/product1.png" alt="">
@@ -38,7 +39,8 @@
                             <p>${item.content}</p>
                         </div>
                         <div class="load_d">
-                            <a class="share" href=""><img src="$[referpath]/images/kfzx/rjxz/images/share.png" alt=""></a>
+                            <a class="share" href="javascript:void(0)" ;"><img
+                                src="$[referpath]/images/kfzx/rjxz/images/share.png" alt=""></a>
                             <a id="btn-account" class="right_l btn btn-block btn-warning" href="${item.downLoad_dx}">
                                 <img src="$[referpath]/images/kfzx/rjxz/images/load.png" alt="">
                                 <span>点击下载 (${item.softsize}M)</span>
@@ -162,11 +164,16 @@
                 for (var i = 0; i < oRed.length; i++) {
                     oRed[i].style.background = "#bb1111";
                 }
-                ;
             }
         }
-        ;
     }
+
+    $(function () {
+        $('.share').click(function () {
+            $(this).parent().parent().parent('.main').siblings().hide();
+            $(this).hide();
+        })
+    })
 </script>
 </body>
 </html>
