@@ -35,16 +35,19 @@
                             </div>
                         </div>
                         <div class="font_s">
-                            <p>为您个性化匹配投资全过程...</p>
+                            <p>${item.content}</p>
                         </div>
                         <div class="load_d">
+                            <a class="share" href=""><img src="$[referpath]/images/kfzx/rjxz/images/share.png" alt=""></a>
                             <a id="btn-account" class="right_l btn btn-block btn-warning" href="${item.downLoad_dx}">
                                 <img src="$[referpath]/images/kfzx/rjxz/images/load.png" alt="">
-                                <span>"点击下载" (${item.softsize}M)</span>
+                                <span>点击下载 (${item.softsize}M)</span>
                             </a>
                         </div>
                     </div>
+                    <div class="clear"></div>
                 </div>
+
             </#list>
         </ul>
     </web:CommonWebpart>
